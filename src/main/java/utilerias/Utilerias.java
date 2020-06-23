@@ -19,18 +19,14 @@ public class Utilerias {
             System.out.println(asunto);
             System.out.println(texto);
             Properties p = new Properties();
-//            p.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-//            p.setProperty("mail.smtp.host", "smtp.gmail.com");
-//            p.setProperty("mail.smtp.starttls.enable", "true");
-//            p.setProperty("mail.smtp.starttls.required", "true");
-//            p.put("mail.smtp.socketFactory.port", "465");
-//            p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-//            p.put("mail.smtp.auth", "true");
-//            p.put("mail.smtp.port", "465");
+            p.put("mail.smtp.ssl.trust", "smtp.gmail.com");
             p.setProperty("mail.smtp.host", "smtp.gmail.com");
             p.setProperty("mail.smtp.starttls.enable", "true");
             p.setProperty("mail.smtp.starttls.required", "true");
-            p.setProperty("mail.smtp.port", "587");
+            p.put("mail.smtp.socketFactory.port", "465");
+            p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+            p.put("mail.smtp.auth", "true");
+            p.put("mail.smtp.port", "465");
             p.setProperty("mail.smtp.user",
                     "webApDevEscom@gmail.com");
             p.setProperty("mail.smtp.auth", "true");
