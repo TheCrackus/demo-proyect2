@@ -27,7 +27,7 @@ public class Utilerias {
             p.setProperty("mail.smtp.user", 
                     "webApDevEscom@gmail.com");
             p.setProperty("mail.smtp.auth", "true");
-      
+            p.setProperty("mail.debug","true");
             Session s = Session.getDefaultInstance(p);
             MimeMessage mensaje= new MimeMessage(s);
             mensaje.setFrom(
