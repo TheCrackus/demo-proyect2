@@ -78,7 +78,22 @@ public class AutorizacionListener implements PhaseListener {
 	
 				NavigationHandler nh = event.getFacesContext().getApplication().getNavigationHandler();
 				nh.handleNavigation(event.getFacesContext(), null, "admin1");
+			}else if (paginaActual.contains("userForm.xhtml") && Sesion.getEstadoSesion() == true){				
+				FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml?faces-redirect=true");
+	
+				NavigationHandler nh = event.getFacesContext().getApplication().getNavigationHandler();
+				nh.handleNavigation(event.getFacesContext(), null, "admin1");
+			}else if (paginaActual.contains("graficas.xhtml") && Sesion.getEstadoSesion() == true && !Sesion.getIsAdmin()){				
+				FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml?faces-redirect=true");
+	
+				NavigationHandler nh = event.getFacesContext().getApplication().getNavigationHandler();
+				nh.handleNavigation(event.getFacesContext(), null, "admin1");
+			}else if (paginaActual.contains("perfilAdmin.xhtml") && Sesion.getEstadoSesion() == true && !Sesion.getIsAdmin()){								FacesContext.getCurrentInstance().getExternalContext().redirect("../index.xhtml?faces-redirect=true");
+	
+				NavigationHandler nh = event.getFacesContext().getApplication().getNavigationHandler();
+				nh.handleNavigation(event.getFacesContext(), null, "admin1");
 			}
+			
 
 		} catch (IOException e) {
 			e.printStackTrace();
