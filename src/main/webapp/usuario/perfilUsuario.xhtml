@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <style>
+        div.tablasx{
+            display: inline-block
+        }
+
+        div.padre{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 150px;
+            padding-left: 200px;
+            padding-right: 200px;
+        }
+
+        div.padre2{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        html,body{
+            background-image: url("#{resource['images:200.gif']}");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+
+    <h:head>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+        <title>Perfil Usuario</title>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <h:form>
+                <h:commandLink class="navbar-brand">Remex</h:commandLink>
+            </h:form>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <h:form id="frmNav" class="navbar-nav">
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{userBean.partidas()}" value="Partidas"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{userBean.objetos()}" value="Objetos"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{userBean.configuraciones()}" value="Configuración"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{userBean.generateReporteI(event)}" value="PDF"
+                                   target="_blank"
+                                   >
+                        <f:param name="claveSel" value="#{userBean.dtoS.usuario.idUsuario}"/>                   
+                    </h:commandLink>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{loginMB.cerrarSesion()}" value="Cerrar Sesión"/>
+                </h:form>
+            </div>
+        </nav>
+        <div class="padre">
+            <div class="tablasx">
+                <center>
+                    <p:panel header="Perfil" class="container">
+                        <f:view>
+                            <div class="row">
+                                <p:graphicImage value="#{userBean.mostrarImagen(userBean.dtoS.usuario.idUsuario)}" width="350" height="250" class="img-rounded img-responsive col-sm-6 col-md-4"/>
+                                <div class="col-sm-6 col-md-8">
+                                    <h:form id="frmPerfil" enctype="multipart/form-data" >
+                                        <p:panelGrid columns="2">
+                                            <p:outputLabel id="lblNombre" for="txtNombre" value="Nombre"/>
+                                            <p:inputText id="txtNombre" 
+                                                         value="#{userBean.dtoS.usuario.usuarioNombre}" 
+                                                         required="true" 
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"/>
+
+                                            <p:outputLabel id="lblPaterno" for="txtPaterno" value="Apellido Paterno"/>
+                                            <p:inputText id="txtPaterno" 
+                                                         value="#{userBean.dtoS.usuario.usuarioPaterno}" 
+                                                         required="true" 
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"/>
+
+                                            <p:outputLabel id="lblMaterno" for="txtMaterno" value="Apellido Materno"/>
+                                            <p:inputText id="txtMaterno" 
+                                                         value="#{userBean.dtoS.usuario.usuarioMaterno}" 
+                                                         required="true" 
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"/>
+
+                                            <p:outputLabel id="lblEmail" for="txtCorreo" value="Correo"/>
+                                            <p:inputText id="txtCorreo" 
+                                                         value="#{userBean.dtoS.usuario.usuarioCorreo}" 
+                                                         required="true" 
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         disabled="true"
+                                                         maxlength="50"/>
+
+                                            <p:outputLabel id="lblUsuario" for="txtUsuario" value="Nombre de Usuario"/>
+                                            <p:inputText id="txtUsuario" 
+                                                         value="#{userBean.dtoS.usuario.usuario}" 
+                                                         required="true" 
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"/>
+
+                                            <p:outputLabel id="lblContrasena" for="txtContra" value="Contraseña"/>
+                                            <p:inputText id="txtContra" 
+                                                         value="#{userBean.dtoS.usuario.contrasena}" 
+                                                         required="true" type="password"
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"/>
+
+                                            <p:outputLabel value="Foto:"/>
+                                            <p:fileUpload id="txtFoto" immediate="true" value="#{userBean.foto}" mode="simple" skinSimple="true" required="true"/>                                                    
+                                        </p:panelGrid>
+                                        <div class="padre2">
+                                            <p:commandButton id="btnActualizar" 
+                                                             value="Actualizar" 
+                                                             action="#{userBean.actualizar()}" 
+                                                             rendered="true" 
+                                                             update="@form" 
+                                                             ajax="false"/>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </f:view>
+                    </p:panel>
+                </center>
+            </div>
+        </div>
+    </h:body>
+</html>
+

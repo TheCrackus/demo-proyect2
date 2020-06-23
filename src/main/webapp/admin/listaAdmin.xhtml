@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <style>
+        div.padre{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 150px;
+            padding-left: 200px;
+            padding-right: 200px;
+        }
+
+        html,body{
+            background-image: url("#{resource['images:200.gif']}");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .texto{
+            text-align: center;
+            vertical-align: middle;
+            overflow-wrap: break-word;
+        }
+    </style>
+
+    <h:head>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <!--        <h:outputStylesheet library="awesome" name="css/font-awesome.css"/>-->
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+        <h:outputScript library="js" name="popper.min.js"/>
+        <title>Lista de Administradores</title>
+    </h:head>
+    <h:body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <h:form>
+                <h:commandLink class="navbar-brand">Remex</h:commandLink>
+            </h:form>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                    data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" 
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <h:form id="frmNav" class="navbar-nav">
+                    <h:commandLink class="nav-item nav-link"  
+                                   action="#{adminBean.perfil()}" 
+                                   value="Perfil"/>
+                    <h:commandLink class="nav-item nav-link"  
+                                   action="#{adminBean.nuevo()}" 
+                                   rendered="#{adminBean.root}" value="Agregar Administrador"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{adminBean.listaUsuarios()}" value="Lista de Usuarios"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{adminBean.generateReporte(aevent)}" value="PDF" target="_blank"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{adminBean.grafica()}" value="Gráficas"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{loginMB.cerrarSesion()}" value="Cerrar Sesión"/>
+                </h:form>
+            </div>
+        </nav>
+        <div class="padre">
+            <center>
+                <f:view>
+                    <h:form id="frmAdmin">
+                        <p:dataTable
+                            id="dtAdmin"
+                            var="dto"
+                            value="#{adminBean.listaDeAdmin}"
+                            emptyMessage="No hay registros que mostrar"
+                            paginator="true"
+                            paginatorPosition="bottom"
+                            rows="10"
+                            rowsPerPageTemplate="5,10,15"
+                            reflow="true"
+                            paginatorTemplate=
+                            "{CurrentPageReport} {FirstPageLink}
+                            {PreviousPageLink} {PageLinks}
+                            {NextPageLink} {LastPageLink} 
+                            {RowsPerPageDropdown}"
+                            >
+
+                            <f:facet name="header">
+                                Lista de los usuarios administradores
+                            </f:facet>
+
+                            <p:column
+                                headerText="Clave"
+                                sortBy="#{dto.administrador.idAdministrador}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.administrador.idAdministrador}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Nombre"
+                                sortBy="#{dto.administrador.adminNombre}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.administrador.adminNombre}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Paterno"
+                                sortBy="#{dto.administrador.adminPaterno}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.administrador.adminPaterno}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Materno"
+                                sortBy="#{dto.administrador.adminMaterno}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.administrador.adminMaterno}"/>
+                            </p:column>
+
+                            <p:column
+                                colspan="2"
+                                headerText="Correo"
+                                sortBy="#{dto.administrador.adminCorreo}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.administrador.adminCorreo}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Municipio"
+                                sortBy="#{dto.administrador.idMunicipio}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.administrador.idMunicipio}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Usuario"
+                                sortBy="#{dto.administrador.adminUsuario}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.administrador.adminUsuario}"/>
+                            </p:column>
+
+                            <p:column 
+                                headerText="Imagen" 
+                                class="justify-content-md-center"
+                                >
+
+                                <p:graphicImage value="#{adminBean.mostrarImagen(dto.administrador.idAdministrador)}" 
+                                                alt="Responsive image"
+                                                class="img-fluid"/>
+
+                            </p:column>
+
+                            <p:column
+                                headerText="Contraseña"
+                                sortBy="#{dto.administrador.adminContrasena}"
+                                rendered="#{loginMB.root}"
+                                styleClass="texto"
+                                
+                                >
+                                <h:outputText value="#{dto.administrador.adminContrasena}"/>
+                            </p:column>
+
+                            <p:column headerText="Acciones" rendered="#{loginMB.root}" colspan="2" class="justify-content-center">
+                                <p:commandButton id="btnEditar" 
+                                                 icon="pi pi-pencil"
+                                                 action="#{adminBean.editar()}" 
+                                                 actionListener="#{adminBean.seleccionarAdministrador(event)}"
+                                                 class="mr-2 ml-3"  
+                                                 >
+                                    <f:param name="claveSel" value="#{dto.administrador.idAdministrador}"/>
+                                </p:commandButton>
+
+                                <p:commandButton id="btnEliminar"
+                                                 class="mr-2"
+                                                 rendered="#{adminBean.NotRoot(dto)}"
+                                                 icon="pi pi-times" 
+                                                 action="#{adminBean.borrar()}" 
+                                                 actionListener="#{adminBean.seleccionarAdministrador(event)}" 
+                                                 >
+                                    <f:param name="claveSel" value="#{dto.administrador.idAdministrador}"/>
+                                    <p:confirm id="eliminarConfirm"
+                                               header="Eliminar Administrador"
+                                               message="¿Estás seguro de eliminar este admin?"
+                                               icon="ui-icon-alert"/>
+                                </p:commandButton>
+                                
+                                    <h:commandLink  action="#{adminBean.generateReporteI(event)}" 
+                                                    target="_blank" style="padding: .3em 1em;"
+                                                    class="mr-2 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-text ui-c" >
+                                        <f:param name="claveSel" value="#{dto.administrador.idAdministrador}"/>
+                                        <i class="pi pi-file-o">
+                                            <h:outputText value="PDF"/>
+                                        </i>
+                                    </h:commandLink>
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <p:confirmDialog id="confirmacionEliminarEvento" global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton id="siBtn" value="Si" styleClass="ui-confirmdialog-yes" type="button" icon="ui-icon-check"/>
+                            <p:commandButton id="noBtn" value="No" styleClass="ui-confirmdialog-no" type="button" icon="ui-icon-close"/>
+                        </p:confirmDialog>
+                    </h:form> 
+                </f:view>
+            </center>
+        </div>
+    </h:body>
+</html>
+

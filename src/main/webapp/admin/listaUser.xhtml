@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <style>
+        
+        div.padre{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 150px;
+            padding-left: 200px;
+            padding-right: 200px;
+        }
+        
+        html,body{
+            background-image: url("#{resource['images:200.gif']}");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        
+        .texto{
+            text-align: center;
+            vertical-align: middle;
+            overflow-wrap: break-word;
+        }
+    </style>
+    
+    <h:head>
+        
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+        <h:outputScript library="js" name="popper.min.js"/>
+        <title>Lista de Usuarios</title>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <h:form>
+                <h:commandLink class="navbar-brand">Remex</h:commandLink>
+            </h:form>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <h:form id="frmNav" class="navbar-nav">
+                    <h:commandLink class="nav-item nav-link"  
+                                   action="#{adminBean.perfil()}" 
+                                   value="Perfil"/>
+                    <h:commandLink class="nav-item nav-link"  
+                                   action="#{adminBean.nuevo()}" 
+                                   rendered="#{adminBean.root}" value="Agregar Administrador"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="/admin/listaAdmin?faces-redirect=true"  value="Lista de Administradores"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{userBean.generateReporte(aevent)}" target="_blank" value="Ver Reporte"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{adminBean.grafica()}" value="Gráficas"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{loginMB.cerrarSesion()}" value="Cerrar Sesión"/>
+                    </h:form>
+            </div>
+        </nav>
+        <div class="padre">
+            <center>
+                <f:view>
+                    <h:form id="frmUser" enctype="multipart/form-data">
+                        <p:dataTable
+                            id="dtUser"
+                            var="dto"
+                            value="#{userBean.listaDeUsuarios}"
+                            emptyMessage="No hay registros que mostrar"
+                            paginator="true"
+                            paginatorPosition="bottom"
+                            rows="10"
+                            rowsPerPageTemplate="5,10,15"
+                            reflow="true"
+                            paginatorTemplate=
+                            "{CurrentPageReport} {FirstPageLink} 
+                             {PreviousPageLink} {PageLinks} 
+                             {NextPageLink} {LastPageLink}
+                             {RowsPerPageDropdown}"
+                            >
+                            <f:facet name="header">
+                                    Lista de los usuarios jugadores
+                                </f:facet>
+                            <p:column
+                                headerText="Clave"
+                                sortBy="#{dto.idUsuario}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.idUsuario}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Nombre"
+                                sortBy="#{dto.usuarioNombre}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.usuarioNombre}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Paterno"
+                                sortBy="#{dto.usuarioPaterno}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.usuarioPaterno}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Materno"
+                                sortBy="#{dto.usuarioMaterno}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.usuarioMaterno}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Usuario"
+                                sortBy="#{dto.usuario}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.usuario}"/>
+                            </p:column>
+
+                            <p:column
+                                colspan="2"
+                                headerText="Correo"
+                                sortBy="#{dto.usuarioCorreo}"
+                                style="width: auto !important;"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.usuarioCorreo}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Contraseña"
+                                sortBy="#{dto.contrasena}"
+                                styleClass="texto"
+                                >
+                                <h:outputText value="#{dto.contrasena}"/>
+                            </p:column>
+
+                            <p:column
+                                headerText="Imagen"
+                                class="justify-content-md-center"
+                                >
+
+                                <p:graphicImage value="#{userBean.mostrarImagen(dto.idUsuario)}"
+                                                alt="Responsive image"
+                                                class="img-fluid"
+                                                />                   
+                            </p:column>                            
+
+                            <p:column headerText="Acciones">
+                                <p:commandButton id="btnEliminar" 
+                                                 class="mx-1"
+                                                 value="Eliminar"
+                                                 action="#{userBean.borrar()}" 
+                                                 actionListener="#{userBean.seleccionarUsuario(event)}" 
+                                                 icon="pi pi-times"
+                                                 >
+                                    <f:param name="idUsuario" value="#{dto.idUsuario}"/>
+                                    <p:confirm id="eliminarConfirm"
+                                               header="Eliminar Usuario"
+                                               message="¿Está seguro de eliminar este Usuario con todo su progreso guardado?"
+                                               icon="ui-icon-alert"/>
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <p:confirmDialog id="confirmacionEliminarUsuario" global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton id="siBtn" value="Si" styleClass="ui-confirmdialog-yes" type="button" icon="ui-icon-check"/>
+                            <p:commandButton id="noBtn" value="No" styleClass="ui-confirmdialog-no" type="button" icon="ui-icon-close"/>
+                        </p:confirmDialog>
+                    </h:form>
+                </f:view>
+            </center>
+        </div>
+    </h:body>
+</html>
+

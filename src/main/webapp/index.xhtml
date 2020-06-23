@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <style>
+        html,body{
+            background-image: url("#{resource['images:300.gif']}");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+    
+    <h:head>
+        <title>Login</title>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputStylesheet library="css" name="all.min.css"/>
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+        <h:outputScript library="js" name="popper.min.js"/>
+        <h:outputStylesheet library="css" name="login.css"/>
+
+    </h:head>
+    <h:body>
+        <div class="container">
+            <h:graphicImage value="/resources/images/login.png" class="mx-auto d-block mt-2 mb-3" rendered="true"/>
+            <div class="d-flex justify-content-center">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Iniciar Sesión</h3>
+                    </div>
+                    <h:panelGrid>
+                        <f:view>
+                            <div class="card-body">
+                                
+                                <h:form id="frmLogin" >
+                                    <h:inputHidden id="accion" value="Login"/>
+                                    <h:panelGrid columns="3" class="form-group row">
+                                        <div class="input-group form-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            </div>
+                                        </div>
+                                        <p:inputText id="txtUser"
+                                                     class="col-form-label form-control"
+                                                     value="#{loginMB.usuario}"
+                                                     required="true"
+                                                     label="Username"
+                                                     />
+                                        <p:message for="txtUser" display="icon"
+                                                   class="ui-messages-{severity}-icon"/>
+                                        <div class="input-group form-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                            </div>
+                                        </div>
+                                        <p:password id="txtPassword"
+                                                     class="col-form-label form-control"
+                                                     value="#{loginMB.contrasena}"
+                                                     required="true"
+                                                     label="password"
+                                                     />
+                                        <p:message for="txtPassword" display="icon"
+                                                   class="ui-messages-{severity}-icon"/>
+                                        <h:commandButton value="Ingresar"
+                                                         class="btn float-right login_btn"
+                                                         action="#{loginMB.login()}"
+                                                         />
+                                    </h:panelGrid>
+                                </h:form>
+                                
+                                <div class="card-footer">
+                                    <h:form>
+                                        <h:commandLink class="d-flex justify-content-center links" action="#{userBean.prepareAdd()}">
+                                        Registro
+                                    </h:commandLink>
+                                    <h:commandLink class="d-flex justify-content-center links">Forgot your password?</h:commandLink>
+                                    </h:form> 
+                                    
+                                    <div class="d-flex justify-content-end social_icon">
+                                        <span><i class="fab fa-facebook-square"></i></span>
+                                        <span><i class="fab fa-google-plus-square"></i></span>
+                                        <span><i class="fab fa-twitter-square"></i></span>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                        </f:view>
+                    </h:panelGrid>
+                </div>
+            </div>
+        </div>
+    </h:body>
+
+</html>
+
+
+

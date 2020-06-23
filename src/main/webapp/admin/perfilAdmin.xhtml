@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <style>
+        div.tablasx{
+            display: inline-block
+        }
+
+        div.padre{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 150px;
+            padding-left: 200px;
+            padding-right: 200px;
+        }
+
+        div.padre2{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        html,body{
+            background-image: url("#{resource['images:200.gif']}");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+
+    <h:head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"/>    
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+        <h:outputScript library="js" name="popper.min.js"/>
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+        <title>Perfil Usuario</title>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <h:form>
+                <h:commandLink class="navbar-brand">Remex</h:commandLink>
+            </h:form>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                    data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" 
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <h:form id="frmNav" class="navbar-nav">
+                    <h:commandLink class="nav-item nav-link"  
+                                   action="#{adminBean.nuevo()}" 
+                                   rendered="#{adminBean.root}" value="Agregar Administrador"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="/admin/listaAdmin?faces-redirect=true"  value="Lista de Administradores"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{adminBean.listaUsuarios()}" value="Lista de Usuarios"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{adminBean.grafica()}" value="Gráficas"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{adminBean.generateReporte(aevent)}" value="PDF" target="_blank"/>
+                    <h:commandLink class="nav-item nav-link" 
+                                   action="#{loginMB.cerrarSesion()}" value="Cerrar Sesión"/>
+                </h:form>
+            </div>
+        </nav>
+        <div class="padre">
+            <div class="tablasx">
+                <center>
+                    <p:panel header="Perfil" class="container">
+                        <f:view>
+                            <div class="row">
+                                <p:graphicImage value="#{adminBean.mostrarImagen(adminBean.dtoS1.administrador.idAdministrador)}" 
+                                                width="350" height="250" 
+                                                class="img-rounded img-responsive col-sm-6 col-md-4"
+                                                />
+                                <div class="col-sm-6 col-md-8">
+                                    <h:form id="frmPerfil" enctype="multipart/form-data" >
+                                        <p:panelGrid columns="3">
+                                            <p:outputLabel id="lblNombre" for="txtNombre" value="Nombre"/>
+                                            <p:inputText id="txtNombre" 
+                                                         value="#{adminBean.dtoS1.administrador.adminNombre}" 
+                                                         required="true" 
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"/>
+                                            <p:message for="txtNombre" display="icon"
+                                                       class="ui-messages-{severity}-icon"/>
+
+                                            <p:outputLabel id="lblPaterno" for="txtPaterno" value="Apellido Paterno"/>
+                                            <p:inputText id="txtPaterno" 
+                                                         value="#{adminBean.dtoS1.administrador.adminPaterno}" 
+                                                         required="true" 
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"/>
+                                            <p:message for="txtPaterno" display="icon"
+                                                       class="ui-messages-{severity}-icon"/>
+
+                                            <p:outputLabel id="lblMaterno" for="txtMaterno" value="Apellido Materno"/>
+                                            <p:inputText id="txtMaterno" 
+                                                         value="#{adminBean.dtoS1.administrador.adminMaterno}" 
+                                                         required="true" 
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"/>
+                                            <p:message for="txtMaterno" display="icon"
+                                                       class="ui-messages-{severity}-icon"/>
+
+                                            <p:outputLabel id="lblEmail" for="txtCorreo" value="Correo"/>
+                                            <p:inputText id="txtCorreo" 
+                                                         value="#{adminBean.dtoS1.administrador.adminCorreo}" 
+                                                         required="true" 
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"
+                                                         disabled="true"/>
+                                            <p:message for="txtCorreo" display="icon"
+                                                       class="ui-messages-{severity}-icon"/>
+
+                                            <p:outputLabel id="lblUsuario" for="txtUsuario" value="Nombre de Usuario"/>
+                                            <p:inputText id="txtUsuario" 
+                                                         value="#{adminBean.dtoS1.administrador.adminUsuario}" 
+                                                         required="true" 
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"/>
+                                            <p:message for="txtUsuario" display="icon"
+                                                       class="ui-messages-{severity}-icon"/>
+
+                                            <p:outputLabel id="lblContrasena" for="txtContra" value="Contraseña"/>
+                                            <p:inputText id="txtContra" 
+                                                         value="#{adminBean.dtoS1.administrador.adminContrasena}" 
+                                                         required="true" type="password"
+                                                         requiredMessage="Este campo es obligatorio" 
+                                                         maxlength="50"/>
+                                            <p:message for="txtContra" display="icon"
+                                                       class="ui-messages-{severity}-icon"/>
+
+                                            <p:outputLabel value="Foto:"/>
+                                            <p:fileUpload id="txtFoto" immediate="true" value="#{adminBean.foto}" 
+                                                          mode="simple" skinSimple="true" required="true"/>    
+                                            <p:message for="txtFoto" display="icon"
+                                                       class="ui-messages-{severity}-icon"/>
+
+                                            <h:outputText value="Estado:"/>
+                                            <h:selectOneMenu id="txtEstado" value="#{adminBean.idEstado}">      
+                                                <f:selectItem itemLabel="Seleccionar Estado" itemValue=""/>
+                                                <f:selectItems value="#{adminBean.listaEstados()}" var="estado"
+                                                               itemValue="#{estado.idEstado}" itemLabel="#{estado.descripcion}" />
+                                                <f:ajax execute="txtEstado" event="change" render="txtMunicipio"/> 
+                                            </h:selectOneMenu>
+                                            <p:message for="txtEstado" display="icon"
+                                                       class="ui-messages-{severity}-icon"/>
+
+                                            <h:outputText id="lblMunicipio" value="Municipio:" />
+                                            <h:selectOneMenu id="txtMunicipio" value="#{adminBean.dtoS1.administrador.idMunicipio}">
+                                                <f:selectItem itemLabel="Seleccionar Municipio" itemValue=""/>
+                                                <f:selectItems value="#{adminBean.listaMunicipios()}" var="municipio"
+                                                               itemValue="#{municipio.idMunicipio}" itemLabel="#{municipio.descripcion}"/>
+                                            </h:selectOneMenu>
+                                            <p:message for="txtMunicipio" display="icon"
+                                                       class="ui-messages-{severity}-icon"/>
+                                        </p:panelGrid>
+
+                                        <div class="padre2">
+                                            <p:commandButton id="btnActualizar" 
+                                                             action="#{adminBean.actualizarP()}" 
+                                                             rendered="true" 
+                                                             update="@form" 
+                                                             ajax="false"
+                                                             value="Actualizar"
+                                                             icon="pi pi-undo"
+                                                             style="margin-right:20px;"
+                                                             >
+                                            </p:commandButton>
+                                        </div>
+
+                                    </h:form>
+                                </div>
+                            </div>
+                        </f:view>
+                    </p:panel>
+                </center>
+            </div>
+        </div>
+    </h:body>
+</html>
+

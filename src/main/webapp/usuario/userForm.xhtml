@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <style>
+        div.tablasx{
+            display: inline-block
+        }
+        
+        div.padre{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 150px;
+            padding-left: 200px;
+            padding-right: 200px;
+        }
+        
+        html,body{
+            background-image: url("#{resource['images:200.gif']}");
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+    </style>
+    
+    <h:head>
+        <title>Usuario Form</title>
+    </h:head>
+    <h:body>
+        <div class="padre">
+            <div class="tablasx">
+                <p:panel header="Formulario de Usuario">
+                    <f:view>
+                        <h:form id="frmUsuario" enctype="multipart/form-data">
+                            <h:inputHidden value="#{userBean.accion}"/>
+
+                            <p:panelGrid columns="3">
+
+                                <p:outputLabel id="lblNombre" for="txtNombre" value="Nombre"/>
+                                <p:inputText id="txtNombre" 
+                                             value="#{userBean.dto.usuario.usuarioNombre}" 
+                                             required="true" 
+                                             requiredMessage="Este campo es obligatorio" 
+                                             maxlength="50"/>
+                                <p:message for="txtNombre" display="icon"
+                                                   class="ui-messages-{severity}-icon"/>
+
+                                <p:outputLabel id="lblPaterno" for="txtPaterno" value="Apellido Paterno"/>
+                                <p:inputText id="txtPaterno" 
+                                             value="#{userBean.dto.usuario.usuarioPaterno}" 
+                                             required="true" 
+                                             requiredMessage="Este campo es obligatorio" 
+                                             maxlength="50"/>
+                                <p:message for="txtPaterno" display="icon"
+                                                   class="ui-messages-{severity}-icon"/>
+
+                                <p:outputLabel id="lblMaterno" for="txtMaterno" value="Apellido Materno"/>
+                                <p:inputText id="txtMaterno" 
+                                             value="#{userBean.dto.usuario.usuarioMaterno}" 
+                                             required="true" 
+                                             requiredMessage="Este campo es obligatorio" 
+                                             maxlength="50"/>
+                                <p:message for="txtMaterno" display="icon"
+                                                   class="ui-messages-{severity}-icon"/>
+
+                                <p:outputLabel id="lblEmail" for="txtCorreo" value="Correo"/>
+                                <p:inputText id="txtCorreo" 
+                                             value="#{userBean.dto.usuario.usuarioCorreo}" 
+                                             required="true" 
+                                             requiredMessage="Este campo es obligatorio" 
+                                             maxlength="50"/>
+                                <p:message for="txtCorreo" display="icon"
+                                                   class="ui-messages-{severity}-icon"/>
+
+                                <p:outputLabel id="lblUsuario" for="txtUsuario" value="Nombre de Usuario"/>
+                                <p:inputText id="txtUsuario" 
+                                             value="#{userBean.dto.usuario.usuario}" 
+                                             required="true" 
+                                             requiredMessage="Este campo es obligatorio" 
+                                             maxlength="50"/>
+                                <p:message for="txtUsuario" display="icon" 
+                                                   class="ui-messages-{severity}-icon"/>
+
+                                <p:outputLabel id="lblContrasena" for="txtContra" value="Contraseña"/>
+                                <p:inputText id="txtContra" 
+                                             value="#{userBean.dto.usuario.contrasena}" 
+                                             required="true" type="password"
+                                             requiredMessage="Este campo es obligatorio" 
+                                             maxlength="50"/>
+                                <p:message for="txtContra" display="icon"
+                                                   class="ui-messages-{severity}-icon"/>
+
+                                <p:outputLabel value="Foto:"/>
+                                <p:fileUpload id="txtFoto" immediate="true" value="#{userBean.foto}" mode="simple" skinSimple="true"/>                                                    
+                                <p:message for="txtFoto" display="icon"
+                                                   class="ui-messages-{severity}-icon"/>
+                            </p:panelGrid>
+                            <center>
+                                <p:panel id="pnlBotones">
+                                    <p:commandButton id="btnAceptar" value="Aceptar" action="#{userBean.crear()}" rendered="true" update="@form" ajax="false"/>
+                                    <p:commandButton id="btnCancelar" value="Cancelar" action="#{userBean.back()}" immediate="true"/>
+                                </p:panel>
+                            </center>
+                        </h:form>
+                    </f:view>
+                </p:panel>
+            </div>
+        </div>
+    </h:body>
+</html>
+
