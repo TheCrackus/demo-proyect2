@@ -25,21 +25,21 @@ public class Utilerias {
             p.setProperty("mail.smtp.starttls.required", "true");
             p.setProperty("mail.smtp.port", "587");
             p.setProperty("mail.smtp.user", 
-                    "webApDevEscom@gmail.com");
+                    "remexenterprisesa@gmail.com");
             p.setProperty("mail.smtp.auth", "true");
             p.setProperty("mail.debug","true");
             Session s = Session.getDefaultInstance(p);
             MimeMessage mensaje= new MimeMessage(s);
             mensaje.setFrom(
-                    new InternetAddress("webApDevEscom@gmail.com"));
+                    new InternetAddress("remexenterprisesa@gmail.com"));
             mensaje.addRecipients(Message.RecipientType.TO,correoDst);
             
             mensaje.setSubject(asunto);
             mensaje.setText(texto);
             
             Transport t = s.getTransport("smtp");
-            t.connect("webApDevEscom@gmail.com",
-                    "123webA69");
+            t.connect("remexenterprisesa@gmail.com",
+                    "45rem31$$");
             t.sendMessage(mensaje, mensaje.getAllRecipients());
             t.close();
         }catch(Exception e){
